@@ -1,0 +1,59 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: undefined
+    network: ropsten
+    source:
+      address: "0xB380522C460f6cD5764ff4b86a164B26B2d2D2f6"
+      abi: RestakingFarm
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - AddNewPool
+        - AdminChanged
+        - BeaconUpgraded
+        - ClaimReward
+        - Deposit
+        - EmergencyWithdraw
+        - OwnershipTransferred
+        - Paused
+        - Unpaused
+        - UpdatePoolMultiplier
+        - UpdatePoolReward
+        - Upgraded
+        - Withdraw
+      abis:
+        - name: RestakingFarm
+          file: ./abis/RestakingFarm.json
+      eventHandlers:
+        - event: AddNewPool(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleAddNewPool
+        - event: AdminChanged(address,address)
+          handler: handleAdminChanged
+        - event: BeaconUpgraded(indexed address)
+          handler: handleBeaconUpgraded
+        - event: ClaimReward(indexed address,uint256)
+          handler: handleClaimReward
+        - event: Deposit(indexed address,uint256)
+          handler: handleDeposit
+        - event: EmergencyWithdraw(indexed address,indexed address,uint256)
+          handler: handleEmergencyWithdraw
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Paused(address)
+          handler: handlePaused
+        - event: Unpaused(address)
+          handler: handleUnpaused
+        - event: UpdatePoolMultiplier(indexed address,indexed address,uint256)
+          handler: handleUpdatePoolMultiplier
+        - event: UpdatePoolReward(indexed address,indexed address,uint256)
+          handler: handleUpdatePoolReward
+        - event: Upgraded(indexed address)
+          handler: handleUpgraded
+        - event: Withdraw(indexed address,uint256)
+          handler: handleWithdraw
+      file: ./src/restaking-farm.ts
