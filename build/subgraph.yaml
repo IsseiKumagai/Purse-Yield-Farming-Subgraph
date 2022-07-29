@@ -1,0 +1,42 @@
+specVersion: 0.0.5
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: RestakingFarmSubgraph
+    network: goerli
+    source:
+      address: "0x09DBB50b48120285DbA6b8e5dE8a70122dAD3095"
+      abi: RestakingFarm
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - UserActions
+        - UserDeposit
+        - UserWithdraw
+        - UserAddNewPool
+        - UserUpdatePoolReward
+        - UserUpdatePoolMultiplier
+        - UserClaimReward
+        - UserEmergencyWithdraw
+      abis:
+        - name: RestakingFarm
+          file: RestakingFarmSubgraph/abis/RestakingFarm.json
+      eventHandlers:
+        - event: AddNewPool(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleAddNewPool
+        - event: ClaimReward(indexed address,uint256)
+          handler: handleClaimReward
+        - event: Deposit(indexed address,uint256)
+          handler: handleDeposit
+        - event: EmergencyWithdraw(indexed address,indexed address,uint256)
+          handler: handleEmergencyWithdraw
+        - event: UpdatePoolMultiplier(indexed address,indexed address,uint256)
+          handler: handleUpdatePoolMultiplier
+        - event: UpdatePoolReward(indexed address,indexed address,uint256)
+          handler: handleUpdatePoolReward
+        - event: Withdraw(indexed address,uint256)
+          handler: handleWithdraw
+      file: RestakingFarmSubgraph/RestakingFarmSubgraph.wasm
